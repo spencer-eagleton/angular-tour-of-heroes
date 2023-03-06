@@ -12,6 +12,9 @@ export class HeroesComponent {
   constructor(private heroService: HeroService) {
   }
 
+  heroes: Hero[] = [];
+  selectedHero?: Hero;
+
   ngOnInit(): void {
     this.getHeroes()
   }
@@ -25,8 +28,10 @@ export class HeroesComponent {
       });
   }
 
-  heroes: Hero[] = [];
-  selectedHero?: Hero;
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero.id).subscribe();
+  }
 
   getHeroes(): void {
     this.heroService.getHeroes()
